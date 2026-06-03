@@ -232,7 +232,7 @@ CHANGELOG.md
 	os.WriteFile(filepath.Join(basePath, ".dockerignore"), []byte(dockerignoreContent), 0644)
 
 	// Create basic README.md
-	readmeContent := fmt.Sprintf("# %s\n\nProject generated using the %s pattern.\n\n## How to Run\n1. ` + "`" + `make build` + "`" + ` to build the binary.\n2. ` + "`" + `make run` + "`" + ` to run the application.\n3. ` + "`" + `make lint` + "`" + ` to validate code quality.\n\n## Versioning\nThis project follows SemVer and Conventional Commits.\n", projectName, archType)
+	readmeContent := fmt.Sprintf("# %s\n\nProject generated using the %s pattern.\n\n## How to Run\n1. `make build` to build the binary.\n2. `make run` to run the application.\n3. `make lint` to validate code quality.\n\n## Versioning\nThis project follows SemVer and Conventional Commits.\n", projectName, archType)
 	os.WriteFile(filepath.Join(basePath, "README.md"), []byte(readmeContent), 0644)
 
 	// Create self-documenting Makefile
