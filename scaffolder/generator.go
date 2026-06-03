@@ -292,7 +292,7 @@ docker-build: ## Build the production Docker image
 
 	// Create multi-stage Dockerfile
 	appDockerfile := `# Build stage
-FROM golang:1.21-alpine AS builder
+FROM golang:1.24-alpine AS builder
 WORKDIR /app
 COPY go.mod go.sum ./
 RUN go mod download
@@ -319,7 +319,7 @@ CMD ["./main"]
 	// Create basic go.mod
 	gomodContent := `module github.com/organization/` + projectName + `
 
-go 1.21
+go 1.24
 
 require gopkg.in/yaml.v3 v3.0.1
 `
