@@ -1,0 +1,5 @@
+# This file defines the individuals or teams that are responsible for code in the repository.
+# For any Pull Request to be merged, it will require an approval from at least one Code Owner.
+
+# By default, @celsojrss owns everything in the repository.
+*       @celsojrss
