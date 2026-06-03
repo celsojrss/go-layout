@@ -135,7 +135,10 @@ func main() {
 		mainPath = filepath.Join(basePath, "cmd", "server", "main.go")
 	}
 
-	os.WriteFile(mainPath, []byte(mainContent), 0644)
+	if err := os.WriteFile(mainPath, []byte(mainContent), 0644); err != nil {
+		fmt.Printf("Error writing main.go: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create default config.yaml
 	configYaml := `server:
@@ -146,7 +149,10 @@ database:
   driver: "postgres"
   dsn: "postgres://user:pass@localhost:5432/db?sslmode=disable"
 `
-	os.WriteFile(filepath.Join(basePath, "configs", "config.yaml"), []byte(configYaml), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "configs", "config.yaml"), []byte(configYaml), 0644); err != nil {
+		fmt.Printf("Error writing config.yaml: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create initial CHANGELOG.md
 	changelogContent := `# Changelog
@@ -160,7 +166,10 @@ All notable changes to this project will be documented in this file.
 - Graceful shutdown logic.
 - Standard linting configuration.
 `
-	os.WriteFile(filepath.Join(basePath, "CHANGELOG.md"), []byte(changelogContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "CHANGELOG.md"), []byte(changelogContent), 0644); err != nil {
+		fmt.Printf("Error writing CHANGELOG.md: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create default .golangci.yml
 	lintContent := `linters-settings:
@@ -184,7 +193,10 @@ issues:
   max-issues-per-linter: 0
   max-same-issues: 0
 `
-	os.WriteFile(filepath.Join(basePath, ".golangci.yml"), []byte(lintContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, ".golangci.yml"), []byte(lintContent), 0644); err != nil {
+		fmt.Printf("Error writing .golangci.yml: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create .gitignore
 	gitignoreContent := `# Binaries
@@ -215,7 +227,10 @@ Thumbs.db
 web/dist/
 web/.next/
 `
-	os.WriteFile(filepath.Join(basePath, ".gitignore"), []byte(gitignoreContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, ".gitignore"), []byte(gitignoreContent), 0644); err != nil {
+		fmt.Printf("Error writing .gitignore: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create .dockerignore
 	dockerignoreContent := `.git
@@ -228,11 +243,17 @@ node_modules
 README.md
 CHANGELOG.md
 `
-	os.WriteFile(filepath.Join(basePath, ".dockerignore"), []byte(dockerignoreContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, ".dockerignore"), []byte(dockerignoreContent), 0644); err != nil {
+		fmt.Printf("Error writing .dockerignore: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create basic README.md
 	readmeContent := fmt.Sprintf("# %s\n\nProject generated using the %s pattern.\n\n## How to Run\n1. `make build` to build the binary.\n2. `make run` to run the application.\n3. `make lint` to validate code quality.\n\n## Versioning\nThis project follows SemVer and Conventional Commits.\n", projectName, archType)
-	os.WriteFile(filepath.Join(basePath, "README.md"), []byte(readmeContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "README.md"), []byte(readmeContent), 0644); err != nil {
+		fmt.Printf("Error writing README.md: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create self-documenting Makefile
 	makefileContent := `BINARY_NAME=` + projectName + `
@@ -264,7 +285,10 @@ docker-build: ## Build the production Docker image
 	if archType == "vertical" {
 		makefileContent = strings.Replace(makefileContent, "cmd/app/main.go", "cmd/server/main.go", -1)
 	}
-	os.WriteFile(filepath.Join(basePath, "Makefile"), []byte(makefileContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "Makefile"), []byte(makefileContent), 0644); err != nil {
+		fmt.Printf("Error writing Makefile: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create multi-stage Dockerfile
 	appDockerfile := `# Build stage
@@ -287,7 +311,10 @@ CMD ["./main"]
 	if archType == "vertical" {
 		appDockerfile = strings.Replace(appDockerfile, "./cmd/app/main.go", "./cmd/server/main.go", -1)
 	}
-	os.WriteFile(filepath.Join(basePath, "Dockerfile"), []byte(appDockerfile), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "Dockerfile"), []byte(appDockerfile), 0644); err != nil {
+		fmt.Printf("Error writing Dockerfile: %v\n", err)
+		os.Exit(1)
+	}
 
 	// Create basic go.mod
 	gomodContent := `module github.com/organization/` + projectName + `
@@ -296,7 +323,10 @@ go 1.21
 
 require gopkg.in/yaml.v3 v3.0.1
 `
-	os.WriteFile(filepath.Join(basePath, "go.mod"), []byte(gomodContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "go.mod"), []byte(gomodContent), 0644); err != nil {
+		fmt.Printf("Error writing go.mod: %v\n", err)
+		os.Exit(1)
+	}
 
 	fmt.Println("Project generated successfully in /output/" + projectName)
 }
