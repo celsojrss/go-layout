@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ main ]
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   security:
     name: Security Scan
@@ -27,6 +24,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.24'
+          cache: false
 
       - name: Govulncheck (Vulnerabilities)
         run: go install golang.org/x/vuln/cmd/govulncheck@latest && govulncheck ./...
@@ -42,7 +40,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.24'
-          cache: true # Now enabled as we have a module structure
+          cache: false
 
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v6
@@ -50,4 +48,4 @@ jobs:
           version: latest
 
       - name: Run Tests
-        run: go test -v -race -coverprofile=coverage.txt -covermode=atomic ./...
+        run: go test -v -race ./...
