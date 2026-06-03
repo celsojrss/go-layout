@@ -9,6 +9,7 @@ Architectural and versioning definitions:
 - **[Vertical Slice](./docs/VERTICAL_SLICE.md)**: For agile, feature-based development.
 - **[Modular Monolith](./docs/MODULAR_MONOLITH.md)**: For large systems requiring module independence.
 - **[Standard Layout](./docs/STANDARD_LAYOUT.md)**: For minimalist libraries and CLI tools.
+- **[Frontend Standard](./docs/FRONTEND.md)**: React + TypeScript standards for full-stack projects.
 - **[Versioning & Commits](./docs/VERSIONING.md)**: SemVer and Conventional Commits standards.
 - **[Observability](./docs/OBSERVABILITY.md)**: Health checks, logging, and graceful shutdown standards.
 - **[Agent Instructions](./docs/AGENTS.md)**: Guidelines for AI agents working on the project.
@@ -19,5 +20,3 @@ Automated Docker-based tool to generate new projects following the standards abo
 
 ---
 *Keep these standards updated and versioned to ensure continuous technical quality across the team.*
-
-# Teste de Protecao
