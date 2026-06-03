@@ -19,3 +19,5 @@ Automated Docker-based tool to generate new projects following the standards abo
 
 ---
 *Keep these standards updated and versioned to ensure continuous technical quality across the team.*
+
+# Teste de Protecao
