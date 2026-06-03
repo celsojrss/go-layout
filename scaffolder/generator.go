@@ -119,7 +119,10 @@ func main() {
 }
 `, mainImports, embedLogic, strings.TrimSpace(func() string { if withUI { return "go serveFrontend()" }; return "" }()))
 
-	os.WriteFile(mainPath, []byte(mainContent), 0644)
+	if err := os.WriteFile(mainPath, []byte(mainContent), 0644); err != nil {
+		fmt.Printf("Error writing main.go: %v\n", err)
+		os.Exit(1)
+	}
 
 	// 2. React Boilerplate (if with-ui)
 	if withUI {
@@ -134,8 +137,14 @@ func main() {
     "preview": "vite preview"
   }
 }`
-		os.WriteFile(filepath.Join(basePath, "web/package.json"), []byte(pkgJson), 0644)
-		os.WriteFile(filepath.Join(basePath, "web/src/App.tsx"), []byte(`export default function App() { return <h1>`+projectName+` UI</h1> }`), 0644)
+		if err := os.WriteFile(filepath.Join(basePath, "web/package.json"), []byte(pkgJson), 0644); err != nil {
+			fmt.Printf("Error writing web/package.json: %v\n", err)
+			os.Exit(1)
+		}
+		if err := os.WriteFile(filepath.Join(basePath, "web/src/App.tsx"), []byte(`export default function App() { return <h1>`+projectName+` UI</h1> }`), 0644); err != nil {
+			fmt.Printf("Error writing web/src/App.tsx: %v\n", err)
+			os.Exit(1)
+		}
 	}
 
 	// 3. Makefile with Frontend support
@@ -166,12 +175,24 @@ lint: ## Run linter
 docker-build: ## Build production Docker image
 	docker build -t $(BINARY_NAME) .
 `
-	os.WriteFile(filepath.Join(basePath, "Makefile"), []byte(makefileContent), 0644)
+	if err := os.WriteFile(filepath.Join(basePath, "Makefile"), []byte(makefileContent), 0644); err != nil {
+		fmt.Printf("Error writing Makefile: %v\n", err)
+		os.Exit(1)
+	}
 
-	// 4. Standard Configs (.gitignore, .golangci.yml, go.mod, etc.) - Simplified for brevity in this tool call
-	os.WriteFile(filepath.Join(basePath, "configs/config.yaml"), []byte("server:\n  port: 8080\n"), 0644)
-	os.WriteFile(filepath.Join(basePath, "go.mod"), []byte("module github.com/organization/"+projectName+"\n\ngo 1.24\n"), 0644)
-	os.WriteFile(filepath.Join(basePath, ".gitignore"), []byte("bin/\nnode_modules/\ndist/\n"), 0644)
+	// 4. Standard Configs
+	if err := os.WriteFile(filepath.Join(basePath, "configs/config.yaml"), []byte("server:\n  port: 8080\n"), 0644); err != nil {
+		fmt.Printf("Error writing configs/config.yaml: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.WriteFile(filepath.Join(basePath, "go.mod"), []byte("module github.com/organization/"+projectName+"\n\ngo 1.24\n"), 0644); err != nil {
+		fmt.Printf("Error writing go.mod: %v\n", err)
+		os.Exit(1)
+	}
+	if err := os.WriteFile(filepath.Join(basePath, ".gitignore"), []byte("bin/\nnode_modules/\ndist/\n"), 0644); err != nil {
+		fmt.Printf("Error writing .gitignore: %v\n", err)
+		os.Exit(1)
+	}
 
 	fmt.Println("Project generated successfully in /output/" + projectName)
 }
